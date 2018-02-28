@@ -1,27 +1,26 @@
 <?php
 use PhoenixLauncher\src\Classes\FileController;
 use PhoenixLauncher\src\Classes\API;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
-require_once __DIR__ . '../Classes/FileController.php';
-require_once __DIR__ . '../Classes/API.php';
+require_once __DIR__ . '/../Classes/FileController.php';
+require_once __DIR__ . '/../Classes/API.php';
 
-$app->group ( '/v1', function ()
+$app->group ( '/v1', function () use ($app)
 {
+	$app->get ( '/ping', API::class . ':ping');
 	
-	$repositoryFileController = new FileController ();
-	$APIController = new API ();
+	$this->get ( '/version', API::class . ':version' );
 	
-	$this->get ( '/ping', $APIController->ping ( $request, $response, $args ) );
-	$this->get ( '/version', $APIController->getVersion ( $request, $response, $args ) );
+	$this->post ( '/handshake', API::class . ':handshake' );
 	
-	$this->post ( '/handshake', $APIController->handshake ( $request, $response, $args ) );
-	
-	
-	$this->group ( '/repository', function () use ($repositoryFileController)
+	$this->group ( '/repository', function ()
 	{
-		$this->post ( '/save', $repositoryFileController->save ( $request, $response, $args ) );
-		$this->post ( '/delete', $repositoryFileController->delete ( $request, $response, $args ) );
-		$this->post ( '/filelist', $repositoryFileController->getActiveFiles ( $request, $response, $args ) );
+		$this->post ( '/save', FileController::class . ':save' );
+		$this->post ( '/delete', FileController::class . ':delete' );
+		$this->post ( '/filelist', FileController::class . ':getActiveFiles' );
 	} );
-	
 } );
+
+

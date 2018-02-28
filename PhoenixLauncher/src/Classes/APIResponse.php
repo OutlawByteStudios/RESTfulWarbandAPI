@@ -26,7 +26,7 @@ class APIResponse
 	{
 		return $this->jsonResponse;
 	}
-	public function send(ResponseInterface &$response): void
+	public function send(ResponseInterface &$response): ResponseInterface
 	{
 		return $response->withStatus($this->status())->write($this->json());
 	}

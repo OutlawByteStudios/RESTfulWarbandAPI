@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/Classes/API.php';
+
+use PhoenixLauncher\src\Classes\API;
+
 // DIC configuration
 
 $container = $app->getContainer();

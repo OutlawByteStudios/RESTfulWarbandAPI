@@ -5,12 +5,11 @@ namespace PhoenixLauncher\src\Classes;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
+require_once __DIR__ . '/APIResponse.php';
+
 class API
 {
 	const VERSION = 0.1;
-	public function __construct()
-	{
-	}
 	public function handshake(ServerRequestInterface $request, ResponseInterface $response, array $args)
 	{
 	}
