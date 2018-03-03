@@ -19,11 +19,7 @@ class Authenticator
 	
 	public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $app)
 	{
-		$_ = new self();
-		$response->getBody()->write('Authenticator says ok');
-		$response = $app($request, $response);
-		
-		return $response;
+		return $app($request, $response);
 	}
 }
 

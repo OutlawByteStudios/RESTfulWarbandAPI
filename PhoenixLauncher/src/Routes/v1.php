@@ -1,8 +1,6 @@
 <?php
-use PhoenixLauncher\src\Classes\FileController;
+use PhoenixLauncher\src\Controller\FileController;
 use PhoenixLauncher\src\Classes\API;
-use Slim\Http\Request;
-use Slim\Http\Response;
 
 require_once __DIR__ . '/../Classes/FileController.php';
 require_once __DIR__ . '/../Classes/API.php';
@@ -13,7 +11,9 @@ $app->group ( '/v1', function () use ($app)
 	
 	$this->get ( '/version', API::class . ':version' );
 	
-	$this->post ( '/handshake', API::class . ':handshake' );
+	$this->get ( '/handshake', API::class . ':handshake' );
+	
+	$this->post('/washhands', API::class . ':obscureClient');
 	
 	$this->group ( '/repository', function ()
 	{
