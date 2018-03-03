@@ -2,7 +2,10 @@
 use PhoenixLauncher\src\Controller\FileController;
 use PhoenixLauncher\src\Classes\API;
 
-require_once __DIR__ . '/../Classes/FileController.php';
+
+
+require_once __DIR__ . '/../Controller/FileController.php';
+
 require_once __DIR__ . '/../Classes/API.php';
 
 $app->group ( '/v1', function () use ($app)

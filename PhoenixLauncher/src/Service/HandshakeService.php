@@ -28,13 +28,13 @@ class HandshakeService
 		
 		return $uid;
 	}
-	public function exists(string $uid)
+	public function exists(string $uid): bool
 	{
-		$query = $this->db->prepare('SELECT * FROM users WHERE uid = ?');
+		$query = $this->db->prepare('SELECT id FROM users WHERE uid = ?');
 		$query->bindValue(1, $uid);
 		$query->execute();
 		
-		return $query->rowCount() > 0 ? true : false;
+		return count($query->fetchAll()) > 0 ? true : false;
 	}
 }
 
