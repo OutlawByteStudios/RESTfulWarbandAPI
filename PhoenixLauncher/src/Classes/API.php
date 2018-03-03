@@ -10,9 +10,6 @@ require_once __DIR__ . '/APIResponse.php';
 class API
 {
 	const VERSION = 0.1;
-	public function handshake(ServerRequestInterface $request, ResponseInterface $response, array $args)
-	{
-	}
 	public function getVersion(ServerRequestInterface $request, ResponseInterface $response, array $args)
 	{
 		return APIResponse::create(
@@ -30,6 +27,16 @@ class API
 				'status' => 'success'
 				], 
 				200)->send($response);
+	}
+	public function handshake(ServerRequestInterface $request, ResponseInterface $response, array $args)
+	{
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$userAgenet = $_SERVER['HTTP_USER_AGENT'];
+		
+	}
+	public function obscureClient(ServerRequestInterface $request, ResponseInterface $response, array $args)
+	{
+		
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhoenixLauncher\src\Classes;
+namespace PhoenixLauncher\src\Controller;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
