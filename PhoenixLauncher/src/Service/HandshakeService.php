@@ -19,11 +19,22 @@ class HandshakeService
 	}
 	public function write(string $ip, string $useragent)
 	{
-		$this->db->prepare('INSERT ');
-	}
-	public function exists()
-	{
+		$uid = uniqid('auth');
+		$query = $this->db->prepare('INSERT INTO users (ip, user_agent, uid) VALUES (?,?,?)');
+		$query->bindValue(1, $ip);
+		$query->bindValue(2, $useragent);
+		$query->bindValue(3, $uid);
+		$query->execute();
 		
+		return $uid;
+	}
+	public function exists(string $uid): bool
+	{
+		$query = $this->db->prepare('SELECT id FROM users WHERE uid = ?');
+		$query->bindValue(1, $uid);
+		$query->execute();
+		
+		return count($query->fetchAll()) > 0 ? true : false;
 	}
 }
 
