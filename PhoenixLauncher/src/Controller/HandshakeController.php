@@ -9,7 +9,6 @@ class HandshakeController
 {
 	private $ip, $userAgent, $uid;
 	private $HandshakeService;
-	
 	public function __construct(string $ip, string $userAgent, string $uid)
 	{
 		$this->ip = $ip;
@@ -22,18 +21,17 @@ class HandshakeController
 		}
 		catch ( \PDOException $e )
 		{
-			return [
+			return [ 
 					'message' => 'Database error',
-					'status' => 'error'
+					'status' => 'error' 
 			];
 		}
 	}
 	public function process(): array
 	{
-		
-		if (! $HandshakeService->exists ( $this->uid ))
+		if (! $this->HandshakeService->exists ( $this->uid ))
 		{
-			$uid = $HandshakeService->write ( $this->ip, $this->userAgent );
+			$uid = $this->HandshakeService->write ( $this->ip, $this->userAgent );
 			return [ 
 					'message' => 'Welcome ' . $uid . ', you must be new!',
 					'status' => 'success',
@@ -53,9 +51,15 @@ class HandshakeController
 			];
 		}
 	}
-	
 	public function washHands()
 	{
-		$this->HandshakeService->obscure($this->uid);
+		$this->HandshakeService->obscure ( $this->uid );
+		
+		return [ 
+				'message' => 'You are now a shadow of your former self.',
+				'status' => 'success',
+				'data' => [ 
+				] 
+		];
 	}
 }

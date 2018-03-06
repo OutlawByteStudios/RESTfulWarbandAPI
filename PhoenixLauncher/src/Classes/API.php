@@ -48,7 +48,8 @@ class API
 			return APIResponse::create(['message' => 'uuid not set or empty.','status' => 'error'], 400)->send($response);
 		}
 		$Handshake = new HandshakeController(null, null, $uid);
-		$Handshake->washHands();
+		
+		return APIResponse::create ( $Handshake->washHands(), 200 )->send ( $response );
 	}
 }
 
