@@ -8,25 +8,28 @@ require_once __DIR__ . '/../Service/HandshakeService.php';
 class HandshakeController
 {
 	private $ip, $userAgent, $uid;
+	private $HandshakeService;
+	
 	public function __construct(string $ip, string $userAgent, string $uid)
 	{
 		$this->ip = $ip;
 		$this->userAgent = $userAgent;
 		$this->uid = $uid;
-	}
-	public function process(): array
-	{
+		
 		try
 		{
-			$HandshakeService = new HandshakeService ();
+			$this->HandshakeService = new HandshakeService ();
 		}
 		catch ( \PDOException $e )
 		{
-			return [ 
+			return [
 					'message' => 'Database error',
-					'status' => 'error' 
+					'status' => 'error'
 			];
 		}
+	}
+	public function process(): array
+	{
 		
 		if (! $HandshakeService->exists ( $this->uid ))
 		{
@@ -49,5 +52,10 @@ class HandshakeController
 					] 
 			];
 		}
+	}
+	
+	public function washHands()
+	{
+		$this->HandshakeService->obscure($this->uid);
 	}
 }

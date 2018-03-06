@@ -28,8 +28,6 @@ class API
 	}
 	public function handshake(ServerRequestInterface $request, ResponseInterface $response, array $args)
 	{
-		
-		
 		$parameters = $request->getQueryParams();
 		$ip = $_SERVER ['REMOTE_ADDR'];
 		$userAgent = $_SERVER ['HTTP_USER_AGENT'];
@@ -43,6 +41,14 @@ class API
 	}
 	public function obscureClient(ServerRequestInterface $request, ResponseInterface $response, array $args)
 	{
+		$parameters = $request->getParsedBody();
+		
+		if ( !isset($parameters['uid']) || $parameters['uid'] === '')
+		{
+			return APIResponse::create(['message' => 'uuid not set or empty.','status' => 'error'], 400)->send($response);
+		}
+		$Handshake = new HandshakeController(null, null, $uid);
+		$Handshake->washHands();
 	}
 }
 
