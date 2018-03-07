@@ -36,5 +36,13 @@ class HandshakeService
 		
 		return count($query->fetchAll()) > 0 ? true : false;
 	}
+	public function obscure(string $uid): void
+	{
+		$query = $this->db->prepare('UPDATE users SET ip=null WHERE uid = ?');
+		$query->bindValue(1, $uid);
+		$query->execute();
+		
+		return;
+	}
 }
 
