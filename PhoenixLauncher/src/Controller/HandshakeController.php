@@ -8,17 +8,16 @@ require_once __DIR__ . '/../Service/HandshakeService.php';
 class HandshakeController
 {
 	private $ip, $userAgent, $uid;
+	private $HandshakeService;
 	public function __construct(string $ip, string $userAgent, string $uid)
 	{
 		$this->ip = $ip;
 		$this->userAgent = $userAgent;
 		$this->uid = $uid;
-	}
-	public function process(): array
-	{
+		
 		try
 		{
-			$HandshakeService = new HandshakeService ();
+			$this->HandshakeService = new HandshakeService ();
 		}
 		catch ( \PDOException $e )
 		{
@@ -27,10 +26,12 @@ class HandshakeController
 					'status' => 'error' 
 			];
 		}
-		
-		if (! $HandshakeService->exists ( $this->uid ))
+	}
+	public function process(): array
+	{
+		if (! $this->HandshakeService->exists ( $this->uid ))
 		{
-			$uid = $HandshakeService->write ( $this->ip, $this->userAgent );
+			$uid = $this->HandshakeService->write ( $this->ip, $this->userAgent );
 			return [ 
 					'message' => 'Welcome ' . $uid . ', you must be new!',
 					'status' => 'success',
@@ -49,5 +50,16 @@ class HandshakeController
 					] 
 			];
 		}
+	}
+	public function washHands()
+	{
+		$this->HandshakeService->obscure ( $this->uid );
+		
+		return [ 
+				'message' => 'You are now a shadow of your former self.',
+				'status' => 'success',
+				'data' => [ 
+				] 
+		];
 	}
 }
